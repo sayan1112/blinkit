@@ -1,20 +1,64 @@
 <%- include('./partials/header'); %>
 
-    <body class="h-screen w-screen flex items-center justify-center bg-gray-100">
+    <body class="h-screen w-screen flex items-center justify-center bg-gray-900 overflow-hidden font-sans">
+        <div class="relative h-full w-full flex items-center justify-center">
+            <!-- Full-screen Background Image -->
+            <img src="/images/blinkit.jpg" alt="Blinkit Splash" class="object-cover w-full h-full opacity-90 brightness-95">
 
-        <div class="relative h-full w-full">
-            <!-- Full-screen Image -->
-            <img src="/images/blinkit.jpg" alt="Background Image" class="object-cover w-full h-full">
+            <!-- Gradient overlay for readability -->
+            <div class="absolute inset-0 bg-gradient-to-t from-black via-black/40 to-transparent"></div>
 
-            <!-- Button at the Bottom -->
-            <div class="absolute bottom-0 w-full flex justify-center mb-8">
-                <a href="/auth/google"
-                    class="bg-black text-white font-semibold py-3 px-6 rounded-lg hover:bg-black transition duration-300">
-                    Continue with Google
+            <!-- Top back to store button -->
+            <div class="absolute top-6 left-6 z-20">
+                <a href="/" class="flex items-center gap-1.5 bg-white/90 hover:bg-white text-gray-900 text-xs font-bold px-3.5 py-2 rounded-full shadow-lg backdrop-blur transition">
+                    <i class="ri-arrow-left-line"></i>
+                    <span>Back to Store</span>
                 </a>
             </div>
-        </div>
 
+            <!-- Login Modal Card at the Bottom -->
+            <div class="absolute bottom-0 w-full max-w-md mx-auto p-6 z-20 pb-10">
+                <div class="bg-white/95 backdrop-blur-md rounded-3xl p-6 shadow-2xl border border-white/20 text-center">
+                    <div class="flex items-center justify-center gap-1 mb-2">
+                        <span class="text-3xl font-black text-blinkit-yellow tracking-tight">blink</span>
+                        <span class="text-3xl font-black text-blinkit-green tracking-tight">it</span>
+                    </div>
+                    <p class="text-xs font-bold uppercase tracking-wider text-gray-500 mb-6">India's Last Minute App</p>
+
+                    <div class="space-y-3">
+                        <!-- Continue with Google (Exact requested button) -->
+                        <a href="/auth/google"
+                            class="w-full flex items-center justify-center gap-3 bg-gray-950 text-white font-bold py-3.5 px-6 rounded-2xl hover:bg-black transition duration-300 shadow-md">
+                            <svg class="w-5 h-5" viewBox="0 0 24 24">
+                                <path fill="#4285F4" d="M23.745 12.27c0-.7-.06-1.4-.19-2.07H12v4.51h6.6c-.29 1.52-1.14 2.82-2.4 3.68v3.05h3.88c2.27-2.09 3.66-5.17 3.66-9.17z"/>
+                                <path fill="#34A853" d="M12 24c3.24 0 5.95-1.08 7.93-2.91l-3.88-3.05c-1.08.72-2.45 1.16-4.05 1.16-3.12 0-5.77-2.1-6.72-4.93H1.25v3.15C3.26 21.36 7.34 24 12 24z"/>
+                                <path fill="#FBBC05" d="M5.28 14.27c-.25-.72-.38-1.49-.38-2.27s.13-1.55.38-2.27V6.58H1.25C.45 8.18 0 9.98 0 12s.45 3.82 1.25 5.42l4.03-3.15z"/>
+                                <path fill="#EA4335" d="M12 4.75c1.77 0 3.35.61 4.6 1.8l3.42-3.42C17.95 1.19 15.24 0 12 0 7.34 0 3.26 2.64 1.25 6.58l4.03 3.15c.95-2.83 3.6-4.98 6.72-4.98z"/>
+                            </svg>
+                            <span>Continue with Google</span>
+                        </a>
+
+                        <!-- Quick Demo User Login -->
+                        <a href="/user/demo-login"
+                            class="w-full flex items-center justify-center gap-2 bg-blinkit-green hover:bg-blinkit-darkgreen text-white font-bold py-3.5 px-6 rounded-2xl transition duration-300 shadow-md">
+                            <i class="ri-user-smile-line text-lg"></i>
+                            <span>One-Click Customer Login (Demo)</span>
+                        </a>
+
+                        <!-- Admin Access Link -->
+                        <div class="pt-2">
+                            <a href="/admin/login" class="text-xs text-gray-500 hover:text-gray-900 font-semibold underline">
+                                Admin Portal Sign In
+                            </a>
+                        </div>
+                    </div>
+
+                    <p class="text-[11px] text-gray-400 mt-4">
+                        By continuing, you agree to our Terms of Service & Privacy Policy
+                    </p>
+                </div>
+            </div>
+        </div>
     </body>
 
-    <%- include('./partials/footer'); %>
+<%- include('./partials/footer'); %>

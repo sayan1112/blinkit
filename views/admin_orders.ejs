@@ -1,0 +1,107 @@
+<%- include('./partials/header'); %>
+
+<body class="bg-gray-100 font-sans">
+    <div class="flex flex-col min-h-screen">
+        <!-- Header -->
+        <header class="bg-white border-b border-gray-200 sticky top-0 z-40 shadow-sm">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex items-center justify-between">
+                <div class="flex items-center gap-6">
+                    <a href="/" class="flex items-center gap-1">
+                        <span class="text-2xl font-black text-blinkit-yellow">blink</span>
+                        <span class="text-2xl font-black text-blinkit-green">it</span>
+                    </a>
+                    <h1 class="text-lg font-bold text-gray-900 border-l border-gray-200 pl-4">Order Management</h1>
+                </div>
+
+                <div class="flex items-center gap-3">
+                    <a href="/admin/dashboard" class="text-sm font-semibold text-gray-700 hover:text-black px-3 py-1.5 rounded-lg hover:bg-gray-100 transition">
+                        <i class="ri-dashboard-line mr-1"></i> Dashboard
+                    </a>
+                    <a href="/admin/products" class="text-sm font-semibold text-gray-700 hover:text-black px-3 py-1.5 rounded-lg hover:bg-gray-100 transition">
+                        <i class="ri-box-3-line mr-1"></i> Products
+                    </a>
+                    <a href="/" class="text-sm font-semibold text-blinkit-green hover:underline px-3 py-1.5">
+                        <i class="ri-store-2-line mr-1"></i> View Store
+                    </a>
+                </div>
+            </div>
+        </header>
+
+        <main class="flex-1 max-w-7xl w-full mx-auto p-4 sm:p-6 lg:p-8">
+            <div class="bg-white rounded-2xl shadow-sm border border-gray-100 p-6">
+                <div class="flex items-center justify-between border-b border-gray-100 pb-4 mb-6">
+                    <h2 class="text-lg font-bold text-gray-900">All Customer Orders</h2>
+                    <span class="text-xs font-semibold bg-gray-100 text-gray-700 px-3 py-1 rounded-full">
+                        <%= orders.length %> Total Order<%= orders.length !== 1 ? 's' : '' %>
+                    </span>
+                </div>
+
+                <% if(orders.length === 0){ %>
+                    <div class="text-center py-12 text-gray-400">
+                        <i class="ri-inbox-line text-5xl mb-2 block"></i>
+                        <p class="text-sm">No customer orders placed yet.</p>
+                    </div>
+                <% } else { %>
+                    <div class="overflow-x-auto">
+                        <table class="w-full text-left text-sm">
+                            <thead class="bg-gray-50 text-gray-500 uppercase text-[10px] tracking-wider border-b border-gray-200">
+                                <tr>
+                                    <th class="py-3 px-4">Order ID</th>
+                                    <th class="py-3 px-4">Customer</th>
+                                    <th class="py-3 px-4">Items</th>
+                                    <th class="py-3 px-4">Total Amount</th>
+                                    <th class="py-3 px-4">Delivery Address</th>
+                                    <th class="py-3 px-4">Payment</th>
+                                    <th class="py-3 px-4">Status</th>
+                                    <th class="py-3 px-4">Action</th>
+                                </tr>
+                            </thead>
+                            <tbody class="divide-y divide-gray-100">
+                                <% orders.forEach(function(o){ %>
+                                    <tr class="hover:bg-gray-50/80 transition">
+                                        <td class="py-3.5 px-4 font-bold text-gray-900">
+                                            #<%= o._id.toString().slice(-6) %>
+                                        </td>
+                                        <td class="py-3.5 px-4">
+                                            <%= o.user ? o.user.name : 'Harsh Sharma' %>
+                                        </td>
+                                        <td class="py-3.5 px-4">
+                                            <%= o.items ? o.items.length : 0 %> items
+                                        </td>
+                                        <td class="py-3.5 px-4 font-bold text-gray-900">
+                                            ₹<%= o.totalAmount %>
+                                        </td>
+                                        <td class="py-3.5 px-4 max-w-xs truncate text-xs text-gray-600">
+                                            <%= o.address %>
+                                        </td>
+                                        <td class="py-3.5 px-4">
+                                            <span class="text-xs font-bold text-emerald-700 bg-emerald-50 px-2.5 py-1 rounded-full">
+                                                <%= o.paymentStatus %>
+                                            </span>
+                                        </td>
+                                        <td class="py-3.5 px-4">
+                                            <form action="/admin/orders/<%= o._id %>/status" method="POST" class="inline">
+                                                <select name="status" onchange="this.form.submit()" class="text-xs font-semibold bg-gray-100 border border-gray-300 rounded-lg p-1.5 focus:outline-none">
+                                                    <option value="Order Placed" <%= o.status === 'Order Placed' ? 'selected' : '' %>>Order Placed</option>
+                                                    <option value="Packed" <%= o.status === 'Packed' ? 'selected' : '' %>>Packed</option>
+                                                    <option value="Out for Delivery" <%= o.status === 'Out for Delivery' ? 'selected' : '' %>>Out for Delivery</option>
+                                                    <option value="Delivered" <%= o.status === 'Delivered' ? 'selected' : '' %>>Delivered</option>
+                                                </select>
+                                            </form>
+                                        </td>
+                                        <td class="py-3.5 px-4">
+                                            <a href="/order/track/<%= o._id %>" class="text-xs font-bold text-blinkit-green hover:underline">
+                                                Live Track →
+                                            </a>
+                                        </td>
+                                    </tr>
+                                <% }) %>
+                            </tbody>
+                        </table>
+                    </div>
+                <% } %>
+            </div>
+        </main>
+    </div>
+</body>
+<%- include('./partials/footer'); %>

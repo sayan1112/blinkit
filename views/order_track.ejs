@@ -1,0 +1,166 @@
+<%- include('./partials/header'); %>
+
+<body class="bg-gray-100 font-sans pb-16">
+    <!-- Header -->
+    <header class="bg-white border-b border-gray-200 sticky top-0 z-40 shadow-sm">
+        <div class="max-w-screen-md mx-auto px-4 py-3 flex items-center justify-between">
+            <a href="/" class="flex items-center gap-1">
+                <span class="text-2xl font-black text-blinkit-yellow">blink</span>
+                <span class="text-2xl font-black text-blinkit-green">it</span>
+            </a>
+            <a href="/" class="text-xs font-bold text-blinkit-green hover:underline flex items-center gap-1">
+                <i class="ri-home-line"></i> Store
+            </a>
+        </div>
+    </header>
+
+    <div class="max-w-screen-md mx-auto p-4">
+        <!-- Live Delivery Alert Banner -->
+        <div class="bg-gradient-to-r from-blinkit-green to-emerald-700 text-white p-6 rounded-2xl shadow-md mb-6 relative overflow-hidden">
+            <div class="relative z-10 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+                <div>
+                    <div class="flex items-center gap-2 mb-2">
+                        <span class="bg-white/20 text-white text-[11px] font-bold px-2.5 py-0.5 rounded-full uppercase tracking-wider">
+                            Live Tracking
+                        </span>
+                        <span class="text-xs text-green-100">Order ID: #<%= order._id.toString().slice(-6) %></span>
+                    </div>
+                    <h1 class="text-2xl sm:text-3xl font-extrabold tracking-tight">Arriving in <span id="countdown">08:42</span> mins</h1>
+                    <p class="text-xs text-green-100 mt-1">Dark Store #04 is dispatching your groceries via electric scooter.</p>
+                </div>
+                <div class="w-16 h-16 bg-white/20 rounded-2xl flex items-center justify-center text-4xl">
+                    <i class="ri-moped-line animate-bounce"></i>
+                </div>
+            </div>
+        </div>
+
+        <!-- Live Status Stepper -->
+        <div class="bg-white p-6 rounded-2xl shadow-sm border border-gray-100 mb-6">
+            <h2 class="text-sm font-bold text-gray-800 mb-5">Delivery Progress</h2>
+            <div class="relative pl-6 space-y-6 before:absolute before:left-2.5 before:top-2 before:bottom-2 before:w-0.5 before:bg-green-200">
+                <!-- Step 1 -->
+                <div class="relative flex items-start gap-4">
+                    <span class="absolute -left-6 w-5 h-5 rounded-full bg-blinkit-green flex items-center justify-center text-white text-xs">
+                        <i class="ri-check-line"></i>
+                    </span>
+                    <div>
+                        <p class="text-sm font-bold text-gray-900">Order Placed & Paid</p>
+                        <p class="text-xs text-gray-500">Payment received via UPI / Razorpay</p>
+                    </div>
+                </div>
+
+                <!-- Step 2 -->
+                <div class="relative flex items-start gap-4">
+                    <span class="absolute -left-6 w-5 h-5 rounded-full bg-blinkit-green flex items-center justify-center text-white text-xs">
+                        <i class="ri-check-line"></i>
+                    </span>
+                    <div>
+                        <p class="text-sm font-bold text-gray-900">Items Packed at Dark Store</p>
+                        <p class="text-xs text-gray-500">Quality-checked and packed in eco-friendly bag</p>
+                    </div>
+                </div>
+
+                <!-- Step 3 -->
+                <div class="relative flex items-start gap-4">
+                    <span class="absolute -left-6 w-5 h-5 rounded-full bg-blinkit-green flex items-center justify-center text-white text-xs animate-pulse">
+                        <i class="ri-flashlight-line"></i>
+                    </span>
+                    <div>
+                        <p class="text-sm font-bold text-blinkit-green">Out for Delivery</p>
+                        <p class="text-xs text-gray-500">Rider on the way to <%= order.address %></p>
+                    </div>
+                </div>
+
+                <!-- Step 4 -->
+                <div class="relative flex items-start gap-4 opacity-50">
+                    <span class="absolute -left-6 w-5 h-5 rounded-full bg-gray-300 flex items-center justify-center text-white text-xs">
+                        <i class="ri-home-line"></i>
+                    </span>
+                    <div>
+                        <p class="text-sm font-bold text-gray-700">Delivered</p>
+                        <p class="text-xs text-gray-500">Contactless doorstep delivery</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Delivery Partner Info -->
+        <div class="bg-white p-5 rounded-2xl shadow-sm border border-gray-100 mb-6 flex items-center justify-between">
+            <div class="flex items-center gap-3">
+                <div class="w-12 h-12 bg-amber-100 rounded-full flex items-center justify-center text-amber-800 text-xl font-bold">
+                    RK
+                </div>
+                <div>
+                    <div class="flex items-center gap-1.5">
+                        <p class="text-sm font-bold text-gray-900">Ramesh Kumar</p>
+                        <span class="bg-green-100 text-blinkit-green text-[10px] font-bold px-1.5 py-0.5 rounded flex items-center">
+                            4.9 <i class="ri-star-fill text-[9px] ml-0.5"></i>
+                        </span>
+                    </div>
+                    <p class="text-xs text-gray-500">Your Delivery Partner • Hero Electric</p>
+                </div>
+            </div>
+            <div class="flex gap-2">
+                <a href="tel:9876543210" class="w-10 h-10 rounded-xl bg-gray-100 hover:bg-green-50 hover:text-blinkit-green flex items-center justify-center text-gray-700 transition">
+                    <i class="ri-phone-line text-lg"></i>
+                </a>
+                <button onclick="alert('Message sent to rider!')" class="w-10 h-10 rounded-xl bg-gray-100 hover:bg-green-50 hover:text-blinkit-green flex items-center justify-center text-gray-700 transition">
+                    <i class="ri-chat-3-line text-lg"></i>
+                </button>
+            </div>
+        </div>
+
+        <!-- Order Items Summary -->
+        <div class="bg-white p-5 rounded-2xl shadow-sm border border-gray-100 mb-6">
+            <div class="flex items-center justify-between border-b border-gray-100 pb-3 mb-3">
+                <h2 class="text-sm font-bold text-gray-800">Order Summary (<%= order.items ? order.items.length : 0 %> items)</h2>
+                <span class="text-xs font-bold text-gray-900">Paid: ₹<%= order.totalAmount %></span>
+            </div>
+            <div class="space-y-3">
+                <% if(order.items && order.items.length > 0){ %>
+                    <% order.items.forEach(function(item){ %>
+                        <div class="flex items-center justify-between text-xs py-1">
+                            <div class="flex items-center gap-2">
+                                <span class="w-5 h-5 rounded bg-gray-100 flex items-center justify-center font-bold text-gray-700">
+                                    <%= item.quantity %>x
+                                </span>
+                                <span class="font-medium text-gray-800"><%= item.name %></span>
+                            </div>
+                            <span class="font-bold text-gray-900">₹<%= item.price * item.quantity %></span>
+                        </div>
+                    <% }) %>
+                <% } %>
+            </div>
+            <div class="mt-4 pt-3 border-t border-gray-100 text-xs text-gray-500 flex justify-between">
+                <span>Delivering to:</span>
+                <span class="font-semibold text-gray-800 text-right max-w-xs truncate"><%= order.address %></span>
+            </div>
+        </div>
+
+        <!-- Back to Home -->
+        <div class="text-center">
+            <a href="/" class="inline-flex items-center gap-2 px-8 py-3.5 bg-blinkit-green hover:bg-blinkit-darkgreen text-white font-bold text-sm rounded-xl transition shadow-lg">
+                <i class="ri-shopping-bag-3-line"></i>
+                <span>Order More Groceries</span>
+            </a>
+        </div>
+    </div>
+
+    <script>
+        // Real-time Countdown timer
+        let totalSeconds = 8 * 60 + 42;
+        const countdownEl = document.getElementById('countdown');
+        const timer = setInterval(() => {
+            if (totalSeconds <= 0) {
+                clearInterval(timer);
+                countdownEl.innerText = "00:00";
+                return;
+            }
+            totalSeconds--;
+            const mins = Math.floor(totalSeconds / 60).toString().padStart(2, '0');
+            const secs = (totalSeconds % 60).toString().padStart(2, '0');
+            countdownEl.innerText = `${mins}:${secs}`;
+        }, 1000);
+    </script>
+</body>
+<%- include('./partials/footer'); %>
