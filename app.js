@@ -13,12 +13,18 @@ const MONGO_URI = process.env.MONGO_URI || 'mongodb://127.0.0.1:27017/blinkit';
 let isConnected = false;
 const connectDB = async () => {
     if (isConnected && mongoose.connection.readyState === 1) return;
+    if (!process.env.MONGO_URI && (process.env.NETLIFY || process.env.AWS_LAMBDA_FUNCTION_NAME)) {
+        return;
+    }
     try {
-        await mongoose.connect(MONGO_URI);
+        await mongoose.connect(MONGO_URI, {
+            serverSelectionTimeoutMS: 2000,
+            connectTimeoutMS: 2000
+        });
         isConnected = true;
         console.log('Connected to MongoDB database (blinkit)');
     } catch (err) {
-        console.error('MongoDB connection error:', err.message);
+        console.warn('MongoDB connection notice:', err.message);
     }
 };
 connectDB();

@@ -12,7 +12,14 @@ async function getCartData(req) {
     const cartMap = req.session.cart; // { [productId]: quantity }
     const productIds = Object.keys(cartMap).filter(id => cartMap[id] > 0);
 
-    const products = await Product.find({ _id: { $in: productIds } });
+    let products = [];
+    try {
+        if (mongoose.connection.readyState === 1 && productIds.length > 0) {
+            products = await Product.find({ _id: { $in: productIds } });
+        }
+    } catch (e) {
+        products = [];
+    }
 
     const cart = [];
     let itemsTotal = 0;
