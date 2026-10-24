@@ -7,7 +7,7 @@
     "start": "node app.js",
     "seed": "node seed.js",
     "dev": "node --watch app.js",
-    "build": "node seed.js || true",
+    "build": "mkdir -p netlify/functions/views && cp -r views/* netlify/functions/views/ && (node seed.js || true)",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],

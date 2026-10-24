@@ -6,7 +6,7 @@
 [functions]
   node_bundler = "esbuild"
   external_node_modules = ["ejs"]
-  included_files = ["views/**", "models/**", "routes/**", "public/**"]
+  included_files = ["views/**", "netlify/functions/views/**", "models/**", "routes/**", "public/**"]
 
 [[redirects]]
   from = "/*"

@@ -35,9 +35,20 @@ app.use(async (req, res, next) => {
     next();
 });
 
-// View engine setup
+// View engine setup with serverless multi-path resolution
+const fs = require('fs');
+let viewsDir = path.join(__dirname, 'views');
+if (!fs.existsSync(viewsDir)) {
+    const cwdViews = path.join(process.cwd(), 'views');
+    const parentViews = path.join(__dirname, '..', '..', 'views');
+    if (fs.existsSync(cwdViews)) {
+        viewsDir = cwdViews;
+    } else if (fs.existsSync(parentViews)) {
+        viewsDir = parentViews;
+    }
+}
 app.set('view engine', 'ejs');
-app.set('views', path.join(__dirname, 'views'));
+app.set('views', viewsDir);
 
 // Core Middlewares
 app.use(express.json());
