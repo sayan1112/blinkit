@@ -1,5 +1,6 @@
 const express = require('express');
 const router = express.Router();
+const mongoose = require('mongoose');
 const bcrypt = require('bcryptjs');
 const Product = require('../models/product');
 const Category = require('../models/categories');
@@ -59,10 +60,17 @@ router.get('/logout', (req, res) => {
 // GET /admin or /admin/dashboard
 router.get(['/', '/dashboard'], isAdminAuthenticated, async (req, res) => {
     try {
-        const prodcount = await Product.countDocuments();
-        const categcount = await Category.countDocuments();
-        const ordercount = await Order.countDocuments();
-        const categories = await Category.find().sort({ name: 1 });
+        let prodcount = 0, categcount = 0, ordercount = 0, categories = [];
+        try {
+            if (mongoose.connection.readyState === 1) {
+                prodcount = await Product.countDocuments();
+                categcount = await Category.countDocuments();
+                ordercount = await Order.countDocuments();
+                categories = await Category.find().sort({ name: 1 });
+            }
+        } catch (e) {
+            console.warn('Admin stats query warning:', e.message);
+        }
 
         res.render('admin_dashboard', {
             prodcount,
@@ -80,7 +88,14 @@ router.get(['/', '/dashboard'], isAdminAuthenticated, async (req, res) => {
 // GET /admin/products
 router.get('/products', isAdminAuthenticated, async (req, res) => {
     try {
-        const allProducts = await Product.find().sort({ createdAt: -1 });
+        let allProducts = [];
+        try {
+            if (mongoose.connection.readyState === 1) {
+                allProducts = await Product.find().sort({ createdAt: -1 });
+            }
+        } catch (e) {
+            console.warn('Admin products query warning:', e.message);
+        }
 
         // Group products by category as expected by admin_products.ejs
         const products = {};

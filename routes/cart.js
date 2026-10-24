@@ -1,5 +1,6 @@
 const express = require('express');
 const router = express.Router();
+const mongoose = require('mongoose');
 const Product = require('../models/product');
 const User = require('../models/user');
 
@@ -52,10 +53,19 @@ router.get('/', async (req, res) => {
         const { cart, finalprice } = await getCartData(req);
 
         // Fallback default user if not logged in
-        let userid = req.session.user ? req.session.user._id : null;
+        let userid = req.session && req.session.user ? req.session.user._id : null;
         if (!userid) {
-            const demoUser = await User.findOne({ email: 'customer@blinkit.com' });
-            userid = demoUser ? demoUser._id : '6651234567890abcdef12345';
+            try {
+                if (mongoose.connection.readyState === 1) {
+                    const demoUser = await User.findOne({ email: 'customer@blinkit.com' });
+                    if (demoUser) userid = demoUser._id;
+                }
+            } catch (e) {
+                // ignore
+            }
+            if (!userid) {
+                userid = '6651234567890abcdef12345';
+            }
         }
 
         res.render('cart', {

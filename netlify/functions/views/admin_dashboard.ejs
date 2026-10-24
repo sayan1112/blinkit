@@ -1,0 +1,200 @@
+<%- include('./partials/header'); %>
+
+    <body class="bg-gray-100 font-sans">
+        <div class="flex flex-col min-h-screen">
+            <!-- Admin Top Navigation Header -->
+            <header class="bg-white border-b border-gray-200 sticky top-0 z-40 shadow-sm">
+                <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex items-center justify-between">
+                    <div class="flex items-center gap-6">
+                        <a href="/" class="flex items-center gap-1">
+                            <span class="text-2xl font-black text-blinkit-yellow">blink</span>
+                            <span class="text-2xl font-black text-blinkit-green">it</span>
+                        </a>
+                        <span class="text-xs font-extrabold uppercase tracking-wider bg-gray-900 text-white px-2.5 py-1 rounded-md">Admin Portal</span>
+                    </div>
+
+                    <div class="flex items-center gap-3">
+                        <a href="/admin/products" class="text-sm font-semibold text-gray-700 hover:text-black px-3 py-1.5 rounded-lg hover:bg-gray-100 transition">
+                            <i class="ri-box-3-line mr-1"></i> Products
+                        </a>
+                        <a href="/admin/orders" class="text-sm font-semibold text-gray-700 hover:text-black px-3 py-1.5 rounded-lg hover:bg-gray-100 transition">
+                            <i class="ri-file-list-3-line mr-1"></i> Orders
+                        </a>
+                        <a href="/" class="text-sm font-semibold text-blinkit-green hover:underline px-3 py-1.5">
+                            <i class="ri-store-2-line mr-1"></i> View Store
+                        </a>
+                        <a href="/admin/logout" class="text-xs font-bold text-red-600 bg-red-50 hover:bg-red-100 px-3 py-2 rounded-lg transition">
+                            Logout
+                        </a>
+                    </div>
+                </div>
+            </header>
+
+            <!-- Main content -->
+            <main class="flex-1 overflow-y-auto py-8">
+                <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                    <!-- Dashboard Overview Cards -->
+                    <div class="mb-8 bg-white shadow-sm rounded-2xl p-6 border border-gray-100">
+                        <h2 class="text-xl font-bold text-gray-800">Dashboard Overview</h2>
+                        <div class="mt-4 grid grid-cols-1 md:grid-cols-3 gap-6">
+                            <div class="bg-blue-50/60 border border-blue-100 p-5 rounded-2xl">
+                                <div class="flex items-center justify-between">
+                                    <h3 class="text-sm font-bold text-blue-900 uppercase tracking-wider">Total Products</h3>
+                                    <i class="ri-archive-line text-2xl text-blue-600"></i>
+                                </div>
+                                <p class="mt-3 text-3xl font-black text-gray-900">
+                                    <%= prodcount %>
+                                </p>
+                                <a href="/admin/products" class="mt-2 inline-block text-xs font-bold text-blue-600 hover:underline">Manage All Products →</a>
+                            </div>
+
+                            <div class="bg-emerald-50/60 border border-emerald-100 p-5 rounded-2xl">
+                                <div class="flex items-center justify-between">
+                                    <h3 class="text-sm font-bold text-emerald-900 uppercase tracking-wider">Total Categories</h3>
+                                    <i class="ri-price-tag-3-line text-2xl text-emerald-600"></i>
+                                </div>
+                                <p class="mt-3 text-3xl font-black text-gray-900">
+                                    <%= categcount %>
+                                </p>
+                                <span class="mt-2 inline-block text-xs font-medium text-emerald-700">Active Grocery Sections</span>
+                            </div>
+
+                            <div class="bg-amber-50/60 border border-amber-100 p-5 rounded-2xl">
+                                <div class="flex items-center justify-between">
+                                    <h3 class="text-sm font-bold text-amber-900 uppercase tracking-wider">Total Orders</h3>
+                                    <i class="ri-shopping-bag-3-line text-2xl text-amber-600"></i>
+                                </div>
+                                <p class="mt-3 text-3xl font-black text-gray-900"><%= typeof ordercount !== 'undefined' ? ordercount : 12 %></p>
+                                <a href="/admin/orders" class="mt-2 inline-block text-xs font-bold text-amber-700 hover:underline">View Live Orders →</a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                        <!-- Create/Update Product Form -->
+                        <div class="bg-white shadow-sm rounded-2xl p-6 border border-gray-100">
+                            <div class="flex items-center gap-2 mb-4">
+                                <div class="w-8 h-8 rounded-lg bg-green-100 text-blinkit-green flex items-center justify-center font-bold">
+                                    <i class="ri-add-line text-lg"></i>
+                                </div>
+                                <h2 class="text-xl font-bold text-gray-800">Add New Product</h2>
+                            </div>
+
+                            <form enctype="multipart/form-data" autocomplete="off" class="space-y-4" action="/products"
+                                method="POST">
+                                <div>
+                                    <label class="block text-xs font-bold text-gray-700 mb-1">Product Name</label>
+                                    <input type="text" name="name" placeholder="e.g. Amul Pure Ghee 1L" required
+                                        class="w-full p-2.5 text-sm border border-gray-300 rounded-xl focus:ring-2 focus:ring-black outline-none">
+                                </div>
+
+                                <div class="grid grid-cols-2 gap-4">
+                                    <div>
+                                        <label class="block text-xs font-bold text-gray-700 mb-1">Price (₹)</label>
+                                        <input type="number" name="price" placeholder="e.g. 550" required min="1"
+                                            class="w-full p-2.5 text-sm border border-gray-300 rounded-xl focus:ring-2 focus:ring-black outline-none">
+                                    </div>
+                                    <div>
+                                        <label class="block text-xs font-bold text-gray-700 mb-1">Stock Quantity</label>
+                                        <input type="number" name="stock" placeholder="e.g. 25" required min="0" value="20"
+                                            class="w-full p-2.5 text-sm border border-gray-300 rounded-xl focus:ring-2 focus:ring-black outline-none">
+                                    </div>
+                                </div>
+
+                                <div>
+                                    <label class="block text-xs font-bold text-gray-700 mb-1">Category</label>
+                                    <input type="text" name="category" list="categories-list" placeholder="Select or type category..." required
+                                        class="w-full p-2.5 text-sm border border-gray-300 rounded-xl focus:ring-2 focus:ring-black outline-none">
+                                    <datalist id="categories-list">
+                                        <% if(typeof categories !== 'undefined' && categories.length > 0){ %>
+                                            <% categories.forEach(function(c){ %>
+                                                <option value="<%= c.name %>">
+                                            <% }) %>
+                                        <% } else { %>
+                                            <option value="Dairy & Breakfast">
+                                            <option value="Fruits & Vegetables">
+                                            <option value="Snacks & Munchies">
+                                            <option value="Cold Drinks & Juices">
+                                            <option value="Instant & Packaged Food">
+                                        <% } %>
+                                    </datalist>
+                                </div>
+
+                                <div>
+                                    <label class="block text-xs font-bold text-gray-700 mb-1">Description</label>
+                                    <textarea name="description" placeholder="Product details, weight, ingredients..." rows="3"
+                                        class="w-full p-2.5 text-sm border border-gray-300 rounded-xl focus:ring-2 focus:ring-black outline-none"></textarea>
+                                </div>
+
+                                <div>
+                                    <label class="block text-xs font-bold text-gray-700 mb-1">Product Image File</label>
+                                    <input type="file" name="image" required accept="image/*"
+                                        class="w-full p-2 text-sm border border-gray-300 rounded-xl bg-gray-50 file:mr-4 file:py-1.5 file:px-3 file:rounded-lg file:border-0 file:text-xs file:font-semibold file:bg-gray-900 file:text-white hover:file:bg-black">
+                                </div>
+
+                                <div class="pt-2">
+                                    <button type="submit"
+                                        class="w-full bg-blinkit-green hover:bg-blinkit-darkgreen text-white font-bold py-3 px-4 rounded-xl shadow-md transition">
+                                        Create Product
+                                    </button>
+                                </div>
+                            </form>
+
+                            <!-- Delete Product by ID -->
+                            <div class="mt-8 pt-6 border-t border-gray-100">
+                                <h3 class="text-sm font-bold text-red-600 mb-3">Quick Delete by Product ID</h3>
+                                <form autocomplete="off" class="flex gap-2" action="/products/delete" method="POST">
+                                    <input type="text" name="product_id" placeholder="Paste Product MongoDB ID" required
+                                        class="flex-1 p-2 text-sm border border-gray-300 rounded-xl outline-none">
+                                    <button type="submit"
+                                        class="bg-red-600 hover:bg-red-700 text-white font-bold text-xs py-2 px-4 rounded-xl transition">
+                                        Delete
+                                    </button>
+                                </form>
+                            </div>
+                        </div>
+
+                        <!-- Create/Update Category Form -->
+                        <div class="space-y-6">
+                            <div class="bg-white shadow-sm rounded-2xl p-6 border border-gray-100">
+                                <div class="flex items-center gap-2 mb-4">
+                                    <div class="w-8 h-8 rounded-lg bg-emerald-100 text-emerald-700 flex items-center justify-center font-bold">
+                                        <i class="ri-folder-add-line text-lg"></i>
+                                    </div>
+                                    <h2 class="text-xl font-bold text-gray-800">Add Category</h2>
+                                </div>
+                                <form autocomplete="off" class="space-y-4" action="/categories/create" method="POST">
+                                    <div>
+                                        <label class="block text-xs font-bold text-gray-700 mb-1">Category Name</label>
+                                        <input type="text" name="name" placeholder="e.g. Organic & Healthy, Bakery" required
+                                            class="w-full p-2.5 text-sm border border-gray-300 rounded-xl focus:ring-2 focus:ring-black outline-none">
+                                    </div>
+                                    <button type="submit"
+                                        class="w-full bg-gray-900 hover:bg-black text-white font-bold py-2.5 px-4 rounded-xl shadow-sm transition">
+                                        Save Category
+                                    </button>
+                                </form>
+                            </div>
+
+                            <!-- Category list badges -->
+                            <div class="bg-white shadow-sm rounded-2xl p-6 border border-gray-100">
+                                <h3 class="text-sm font-bold text-gray-800 mb-3">Existing Categories</h3>
+                                <div class="flex flex-wrap gap-2">
+                                    <% if(typeof categories !== 'undefined' && categories.length > 0){ %>
+                                        <% categories.forEach(function(c){ %>
+                                            <span class="inline-flex items-center gap-1.5 px-3 py-1.5 bg-gray-100 text-gray-800 rounded-xl text-xs font-semibold">
+                                                <i class="ri-price-tag-3-fill text-blinkit-green text-xs"></i>
+                                                <%= c.name %>
+                                            </span>
+                                        <% }) %>
+                                    <% } %>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </main>
+        </div>
+    </body>
+
+<%- include('./partials/footer'); %>

@@ -1,0 +1,73 @@
+<%- include('./partials/header'); %>
+
+    <body class="bg-gray-50 flex items-center justify-center min-h-screen font-sans p-4">
+        <div class="w-full max-w-md bg-white rounded-3xl shadow-xl border border-gray-100 p-8">
+            <!-- Branding -->
+            <div class="text-center mb-6">
+                <a href="/" class="inline-flex items-center gap-1 mb-2">
+                    <span class="text-3xl font-black text-blinkit-yellow">blink</span>
+                    <span class="text-3xl font-black text-blinkit-green">it</span>
+                </a>
+                <h2 class="text-xl font-extrabold text-gray-900">Admin Control Center</h2>
+                <p class="text-xs text-gray-500 mt-1">Manage dark store inventory, products, and categories</p>
+            </div>
+
+            <!-- Demo Helper Banner -->
+            <div class="mb-6 p-3 bg-amber-50 border border-amber-200 rounded-xl text-xs text-amber-800 flex items-center justify-between">
+                <div>
+                    <span class="font-bold">Demo Admin:</span> admin@blinkit.com / admin123
+                </div>
+                <button type="button" onclick="fillAdminCreds()" class="text-xs bg-amber-200 hover:bg-amber-300 font-bold px-2 py-1 rounded transition">
+                    Auto-Fill
+                </button>
+            </div>
+
+            <% if(typeof error !== 'undefined' && error){ %>
+                <div class="mb-4 p-3 bg-red-50 border border-red-200 text-red-700 text-xs rounded-xl flex items-center gap-2">
+                    <i class="ri-error-warning-line text-base"></i>
+                    <span><%= error %></span>
+                </div>
+            <% } %>
+
+            <form autocomplete="off" class="space-y-4" action="/admin/login" method="POST">
+                <div>
+                    <label for="email" class="block text-xs font-bold uppercase tracking-wider text-gray-700 mb-1">
+                        Admin Email
+                    </label>
+                    <input id="email" name="email" type="email" required
+                        class="w-full px-3.5 py-2.5 text-sm border border-gray-300 rounded-xl focus:ring-2 focus:ring-black focus:border-transparent outline-none transition"
+                        placeholder="admin@blinkit.com">
+                </div>
+
+                <div>
+                    <label for="password" class="block text-xs font-bold uppercase tracking-wider text-gray-700 mb-1">
+                        Password
+                    </label>
+                    <input id="password" name="password" type="password" required
+                        class="w-full px-3.5 py-2.5 text-sm border border-gray-300 rounded-xl focus:ring-2 focus:ring-black focus:border-transparent outline-none transition"
+                        placeholder="••••••••">
+                </div>
+
+                <div class="flex items-center justify-between text-xs pt-1">
+                    <a href="/" class="text-gray-500 hover:text-gray-900 font-medium">← Back to Store</a>
+                    <span class="text-gray-400">Secure Access</span>
+                </div>
+
+                <div class="pt-2">
+                    <button type="submit"
+                        class="w-full py-3 px-4 bg-gray-900 hover:bg-black text-white text-sm font-bold rounded-xl transition shadow-md flex items-center justify-center gap-2">
+                        <i class="ri-lock-line"></i>
+                        <span>Sign into Admin Panel</span>
+                    </button>
+                </div>
+            </form>
+        </div>
+
+        <script>
+            function fillAdminCreds() {
+                document.getElementById('email').value = 'admin@blinkit.com';
+                document.getElementById('password').value = 'admin123';
+            }
+        </script>
+    </body>
+<%- include('./partials/footer'); %>
